@@ -75,3 +75,14 @@ steps:
     arguments: '--suite=ArtifactEngine'
   condition: or(contains(variables['UPDATEDAREAPATHS'], 'ArtifactEngine'),contains(variables['UPDATEDAREAPATHS'], 'package.json'))
 
+- task: gulp@0
+  displayName: 'gulp package'
+  inputs:
+    targets: package
+    arguments: '--publisher=rosen-group'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)/_package'
+    artifact: 'packages'
+    publishLocation: 'pipeline'
