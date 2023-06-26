@@ -2,6 +2,10 @@ pool:
   name: Azure Pipelines
   vmImage: windows-latest
 
+trigger:
+  branches:
+    include:
+    - master
 
 steps:
 - powershell: |
@@ -62,6 +66,12 @@ steps:
   displayName: 'npm install'
   inputs:
     verbose: false
+
+- task: Npm@1
+  displayName: 'npm install tfx-cli'
+  inputs:
+    command: 'custom'
+    customCommand: 'install -g tfx-cli'
 
 - task: gulp@0
   displayName: 'gulp build'
